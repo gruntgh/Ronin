@@ -1,0 +1,1 @@
+INSERT INTO Member (Name,LastName,Birth,Gender) VALUES ('Roberto','Begliardi','12/02/1981',0)

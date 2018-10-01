@@ -1,0 +1,94 @@
+﻿<Page
+    x:Class="Ronin.UWA.Pages.EditMemberPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Ronin.UWA.Pages"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:converters="using:Ronin.UWA.Converters"
+    xmlns:controls="using:Ronin.UWA.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Page.Resources>
+        <converters:StringFormatConverter x:Key="DateStringFormatConverter" x:Name="DateStringFormatConverter" StringFormat="{}{0:dd/MM/yyyy}"/>
+        <converters:DateTimeToDateTimeOffsetConverter x:Key="DateTimeToDateTimeOffsetConverter" x:Name="DateTimeToDateTimeOffsetConverter" />
+    </Page.Resources>
+    <ScrollViewer>
+        <StackPanel DataContext="{Binding Path=Member}">
+            <StackPanel.Resources>
+            </StackPanel.Resources>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="128"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!--<Ellipse Height="128" Width="128" Margin="0,0,0,0" Grid.Column="0" Grid.Row="0">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="/Assets/ronin.jpg"/>
+                </Ellipse.Fill>
+            </Ellipse>-->
+                <PersonPicture DisplayName="Jane Doe"  ProfilePicture="/Assets/ronin.jpg" Initials="AA" />
+                <StackPanel Orientation="Vertical" Grid.Column="2" Margin="64,0,0,0"  VerticalAlignment="Center" >
+                    <StackPanel Orientation="Horizontal">
+                        <controls:ValidationTextBox ValidationType="Characters" Text="{Binding Path=Name, Mode=TwoWay}" Header="Nome" PlaceholderText="Nome" Margin="0,0,0,0"  />
+                        <controls:ValidationTextBox ValidationType="Characters" MaxWidth="560"  Text="{Binding Path=LastName, Mode=TwoWay}" Header="Cognome" PlaceholderText="Cognome"  Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <controls:ValidationTextBox ValidationType="Email" Margin="0" Text="{Binding Path=Mail, Mode=TwoWay}"  />
+                </StackPanel>
+
+            </Grid>
+            <DatePicker Header="Nato il" Date="{Binding Path=Birth, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"  />
+            <!--<TextBox Margin="0" Text="{Binding Path=Birth, Converter={StaticResource DateStringFormatConverter}, Mode=TwoWay}"  />-->
+
+            <ComboBox ItemsSource="{x:Bind GenderValues}" SelectedValue="{Binding Path=Gender, Mode=TwoWay}" Header="Sesso" Width="200" />
+            <!--<TextBox Margin="0" Text="{Binding Path=Gender, Mode=TwoWay}" Header="Sesso" PlaceholderText="Sesso" />-->
+
+            <controls:ValidationTextBox x:Name="Totest" Margin="0" Text="{Binding Path=FiscalCode, Mode=TwoWay}" Header="Codice Fiscale" PlaceholderText="XXXXXX00XX00X000X"
+                 ValidationMode="Normal"
+                 ValidationType="Custom" 
+                 Regex="^(?:(?:[B-DF-HJ-NP-TV-Z]|[AEIOU])[AEIOU][AEIOUX]|[B-DF-HJ-NP-TV-Z]{2}[A-Z]){2}[\dLMNP-V]{2}(?:[A-EHLMPR-T](?:[04LQ][1-9MNP-V]|[1256LMRS][\dLMNP-V])|[DHPS][37PT][0L]|[ACELMRT][37PT][01LM])(?:[A-MZ][1-9MNP-V][\dLMNP-V]{2}|[A-M][0L](?:[1-9MNP-V][\dLMNP-V]|[0L][1-9MNP-V]))[A-Z]$"
+                 />
+            <TextBox Margin="0" Text="{Binding Path=BirthLocality, Mode=TwoWay}" Header="Nato a" PlaceholderText="Nascita" />
+            <controls:ValidationTextBox ValidationType="Characters" Margin="0" Text="{Binding Path=Job, Mode=TwoWay}" Header="Lavoro" PlaceholderText="Lavoro" />
+            <TextBox Margin="0" DataContext="{Binding Path=Address}" Text="{Binding Path=FormattedAddress, Mode=TwoWay}" Header="Indirizzo" PlaceholderText="Indirizzo" />
+            <!--<TextBox Margin="0" Text="{Binding Path=Phone, Mode=TwoWay}" Header="Telefono" PlaceholderText="Telefono"-->
+            <controls:ValidationTextBox x:Name="Myctrl"
+                           Text="{Binding Path=Phone, Mode=TwoWay}" Header="Telefono" PlaceholderText="Telefono" InputScope="TelephoneNumber" ValidationType="PhoneNumber"  ValidationMode="Normal"       ></controls:ValidationTextBox>
+            <!--<TextBox  Margin="0" Text="{Binding Path=Phone, Mode=TwoWay}" Header="Telefono" PlaceholderText="Telefono" InputScope="TelephoneNumValidationType="PhoneNumber"ber"
+                 Name="PhoneNumberValidatorForce"
+                 extensions:TextBoxRegex.ValidationMode="Forced"
+                 extensions:TextBoxRegex.ValidationType="PhoneNumber"
+                Template="{StaticResource ValidableTextBox}"
+                  IsReadOnly="{Binding (CheckBox.IsChecked), ElementName=EnebReaonly}" 
+                >
+           
+        </TextBox>
+        <TextBlock Text="{Binding (extensions:TextBoxRegex.IsValid), ElementName=PhoneNumberValidatorForce}" />
+        <CheckBox Content="CheckBox"  IsThreeState="False" Margin="20" x:Name="EnebReaonly" />-->
+
+            <!--<TextBox Margin="0" Text="{Binding Path=HealthCertificate, Converter={StaticResource DateStringFormatConverter}, Mode=TwoWay}" Header="Scadenza Certificato"  />-->
+            <DatePicker Header="Scadenza Certificato" Date="{Binding Path=HealthCertificate, Mode=TwoWay, Converter={StaticResource DateTimeToDateTimeOffsetConverter}}"  />
+            <ComboBox ItemsSource="{x:Bind MemberStatus}" SelectedItem="{Binding Path=Status, Mode=TwoWay}" DisplayMemberPath="Name" Header="Stato" />
+            <!--<TextBox Margin="0" Text="{Binding Path=Status, Mode=TwoWay}" Header="Stato" PlaceholderText="Stato" />-->
+            <ListView x:Name="associaz" ItemsSource="{Binding Path=Affiliations}">
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="47"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Path=Title}" Foreground="Teal" 
+                           FontSize="15" Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Click="Button_Click" Content="Aggiungi" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>
